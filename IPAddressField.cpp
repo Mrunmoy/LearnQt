@@ -36,6 +36,8 @@ IPAddressField::IPAddressField(QWidget *parent)
         connect(m_ipSeg[i], &QLineEdit::editingFinished, this, std::bind(&IPAddressField::onEditingFinished, this, m_ipSeg[i]));
         connect(m_ipSeg[i], &QLineEdit::inputRejected, this, std::bind(&IPAddressField::onInputRejected, this, m_ipSeg[i]));
         connect(m_ipSeg[i], &QLineEdit::returnPressed, this, std::bind(&IPAddressField::onReturnPressed, this, m_ipSeg[i]));
+        connect(m_ipSeg[i], &QLineEdit::textChanged, this, std::bind(&IPAddressField::onTextChanged, this, m_ipSeg[i], std::placeholders::_1));
+        connect(m_ipSeg[i], &QLineEdit::textEdited, this, std::bind(&IPAddressField::onTextEdited, this, m_ipSeg[i], std::placeholders::_1));
     }
 
     const QString labelStyle = "QLabel{ "
@@ -63,6 +65,11 @@ IPAddressField::IPAddressField(QWidget *parent)
     layout->addWidget(m_ipSeg[3]);
 }
 
+IPAddressField::~IPAddressField()
+{
+    qDebug() << __FUNCTION__;
+}
+
 void IPAddressField::onEditingFinished(QLineEdit* sender)
 {
     qDebug() << __FUNCTION__;
@@ -79,4 +86,16 @@ void IPAddressField::onReturnPressed(QLineEdit* sender)
 {
     qDebug() << __FUNCTION__;
     qDebug() << "value: " << sender->text();
+}
+
+void IPAddressField::onTextChanged(QLineEdit* sender, const QString &text)
+{
+    qDebug() << __FUNCTION__;
+    qDebug() << "value: " << text;
+}
+
+void IPAddressField::onTextEdited(QLineEdit* sender, const QString &text)
+{
+    qDebug() << __FUNCTION__;
+    qDebug() << "value: " << text;
 }
